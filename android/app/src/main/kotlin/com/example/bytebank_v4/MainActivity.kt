@@ -1,4 +1,4 @@
-package com.example.flutter_firebase
+package com.example.bytebank_v4
 
 import io.flutter.embedding.android.FlutterActivity
 

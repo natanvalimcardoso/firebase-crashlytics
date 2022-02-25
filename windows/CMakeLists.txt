@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(flutter_firebase LANGUAGES CXX)
+project(bytebank_v4 LANGUAGES CXX)
 
-set(BINARY_NAME "flutter_firebase")
+set(BINARY_NAME "bytebank_v4")
 
 cmake_policy(SET CMP0063 NEW)
 
