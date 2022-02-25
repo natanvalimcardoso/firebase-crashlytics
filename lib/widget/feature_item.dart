@@ -16,6 +16,7 @@ class FeatureItem extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () {
+          FirebaseCrashlytics.instance.crash();
           Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => route),
           );

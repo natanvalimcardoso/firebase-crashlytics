@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:curso_alura_2/components/response_dialog.dart';
 import 'package:curso_alura_2/components/transaction_auth_dialog.dart';
 import 'package:curso_alura_2/http/webclients/TransactionWebClient.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import '../models/contact.dart';
 import '../models/transaction.dart';
@@ -91,33 +92,43 @@ class _TransactionFormState extends State<TransactionForm> {
 
   void _save(Transaction transactionCreated, String password,
       BuildContext context) async {
-    final Transaction transaction = await _webClient.save(transactionCreated, password)
-    
-    .catchError(
+    final Transaction transaction = await _webClient.save(transactionCreated, password).catchError(
       (e) {
-        _showFailureMessage(context, message: 'Timeout submitting transaction'); 
+        if (FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled) {
+          FirebaseCrashlytics.instance.setCustomKey('Exeption', e.toString());
+          FirebaseCrashlytics.instance.setCustomKey('Http_body', transactionCreated.toString());
+          FirebaseCrashlytics.instance.recordError(e, null);
+        }
+
+        _showFailureMessage(context, message: 'Timeout submitting transaction');
       },
       test: (e) => e is TimeoutException, // serve para testar se o erro é de timeout
     ).catchError(
       (e) {
-       _showFailureMessage(context, message: e.message);
+        if (FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled) {
+          FirebaseCrashlytics.instance.setCustomKey('Exeption', e.toString());
+          FirebaseCrashlytics.instance.setCustomKey('Http_code', e.statusCode);
+          FirebaseCrashlytics.instance.setCustomKey('Http_body', transactionCreated.toString());
+          FirebaseCrashlytics.instance.recordError(e, null);
+        }
+        _showFailureMessage(context, message: e.message);
       },
       test: (e) => e is Exception, // serve para testar se o erro é uma exceção  e não um erro de conexão
     );
-    
+
     Navigator.of(context).pop(transaction);
     _sucessDialog(context);
   }
 
- 
 //* Métodos criados falhas
- void _showFailureMessage(BuildContext context, {required String message}) {
+  void _showFailureMessage(BuildContext context, {required String message}) {
     showDialog(
         context: context,
         builder: (contextDialog) {
           return FailureDialog(message);
         });
   }
+
 //* Métodos criados sucesso
   void _sucessDialog(BuildContext context) {
     showDialog(
