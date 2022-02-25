@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "135611136195",
+    "project_id": "fir-alura-c1bbe",
+    "storage_bucket": "fir-alura-c1bbe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:135611136195:android:037a78d967310c20b10a76",
+        "android_client_info": {
+          "package_name": "com.example.bytebank_v4"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "135611136195-era3djuqrso4brlkjq7h9v24qmvbd9pd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3cWb8zZnGSMc5PlIl7ZgoaDQRJWdluv4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "135611136195-era3djuqrso4brlkjq7h9v24qmvbd9pd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
