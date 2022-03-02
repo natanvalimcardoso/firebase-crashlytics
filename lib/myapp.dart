@@ -1,4 +1,3 @@
-import 'package:curso_alura_2/components/transaction_auth_dialog.dart';
 import 'package:flutter/material.dart';
 import 'screens/dashboard.dart';
 
