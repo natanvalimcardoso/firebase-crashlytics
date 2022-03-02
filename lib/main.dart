@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +17,13 @@ void main() async {
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   }
 
-  await Firebase.initializeApp();
+  runZonedGuarded<Future<void>>(() async {
+    runApp(MyApp());
+  }, (error, stackTrace) async {
+    await FirebaseCrashlytics.instance.recordError(error, stackTrace);
+    print('Error: $error');
+    print('Stack trace: $stackTrace');
+  });
 
-  runApp(MyApp());
+  await Firebase.initializeApp();
 }
